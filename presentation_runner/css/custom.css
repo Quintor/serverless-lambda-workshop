@@ -1,0 +1,267 @@
+/*** custom styles ***/
+
+body {
+  box-sizing: border-box;
+}
+
+.columns {
+  display: grid !important;
+  grid-gap: 1rem;
+  align-items: start;
+}
+
+.columns pre {
+  margin: unset;
+  width: unset;
+}
+
+.columns pre code {
+  width: 100%;
+  height: 100%;
+}
+
+.columns.two {
+  grid-template-columns: repeat(2, 1fr);
+  grid-template-areas: "left right";
+}
+
+.columns.three {
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-areas: "left middle right";
+}
+
+.columns.four {
+  grid-template-columns: repeat(4, 1fr);
+  grid-template-areas: "left left-middle right-middle right";
+}
+
+.columns > * {
+  display: block !important;
+}
+
+.columns > .left {
+  grid-area: left;
+}
+
+.columns > .right {
+  grid-area: right;
+}
+
+.columns > .middle {
+  grid-area: middle;
+}
+
+.columns > .middle.left {
+  grid-area: left-middle;
+}
+
+.columns > .middle.right {
+  grid-area: right-middle;
+}
+
+.columns.four > .middle {
+  grid-area: unset;
+  grid-column: span 2;
+}
+
+.columns > [data-span="2"] {
+  grid-area: unset;
+  grid-column: span 2;
+}
+
+body::after {
+    content: url("/images/blokjes-inverted.png")
+}
+
+.reveal section img.clean {
+    border: none;
+    box-shadow: none;
+    background: unset;
+}
+
+.reveal section *.center {
+    display: block;
+    margin: auto;
+    margin-top: inherit;
+}
+
+.columns h5 {
+    font-weight: bolder;
+    display: table;
+    margin: auto;
+    margin-bottom: 20px;
+    padding-left: 20px;
+    padding-right: 20px;
+    color: white;
+    border-bottom: 2px white solid;
+}
+
+.columns h5::after {
+    display: block;
+}
+
+.columns h5 ~ * {
+    text-align: center;
+}
+
+#left-part {
+  float: left;
+  width:50%;
+  padding: 5px;
+}
+
+#right-part {
+  float: right;
+  width:50%;
+  padding: 5px;
+}
+
+#left, .left {
+  float: left;
+  width:100%;
+  padding: 5px;
+}
+
+#right, .right {
+  float: right;
+  width:100%;
+  padding: 5px;
+}
+
+.reveal .slides section .fragment.step-fade {
+  animation: fadeOut ease .5s;
+  -webkit-animation: fadeOut ease .5s;
+  -moz-animation: fadeOut ease .5s;
+  -o-animation: fadeOut ease .5s;
+  -ms-animation: fadeOut ease .5s;
+  opacity: 0;
+  display: none; 
+  visibility: hidden;
+}
+
+.reveal .slides section .fragment.step-fade.current-fragment, 
+.reveal .slides section .fragment.step-fade.current-visible {
+  animation: fadeIn ease .5s;
+  -webkit-animation: fadeIn ease .5s;
+  -moz-animation: fadeIn ease .5s;
+  -o-animation: fadeIn ease .5s;
+  -ms-animation: fadeIn ease .5s;
+  opacity: 1;
+  display: block; 
+  visibility: visible;
+}
+
+@keyframes fadeIn {
+  0% {
+    opacity:0;
+  }
+  100% {
+    opacity:1;
+  }
+}
+
+@-moz-keyframes fadeIn {
+  0% {
+    opacity:0;
+  }
+  100% {
+    opacity:1;
+  }
+}
+
+@-webkit-keyframes fadeIn {
+  0% {
+    opacity:0;
+  }
+  100% {
+    opacity:1;
+  }
+}
+
+@-o-keyframes fadeIn {
+  0% {
+    opacity:0;
+  }
+  100% {
+    opacity:1;
+  }
+}
+
+@-ms-keyframes fadeIn {
+  0% {
+    opacity:0;
+  }
+  100% {
+    opacity:1;
+  }
+}
+
+@keyframes fadeOut {
+  0% {
+    opacity:1;
+  }
+  100% {
+    opacity:0;
+  }
+}
+
+@-moz-keyframes fadeOut {
+  0% {
+    opacity:1;
+  }
+  100% {
+    opacity:0;
+  }
+}
+
+@-webkit-keyframes fadeOut {
+  0% {
+    opacity:1;
+  }
+  100% {
+    opacity:0;
+  }
+}
+
+@-o-keyframes fadeOut {
+  0% {
+    opacity:1;
+  }
+  100% {
+    opacity:0;
+  }
+}
+
+@-ms-keyframes fadeOut {
+  0% {
+    opacity:1;
+  }
+  100% {
+    opacity:0;
+  }
+}
+
+.reveal h6.code-header {
+  margin: unset;
+  text-transform: unset; 
+  width: 90%;
+  margin-left: auto;
+  margin-right: auto;
+  text-align: left;
+  font-size: 14px;
+  font-family: monospace;;
+  padding: 4px 8px;
+  color: rgb(229, 227, 223);
+  background-color: #c12847;
+  border-top-left-radius: 4px;
+  border-top-right-radius: 4px;
+}
+
+.reveal h6.code-header + pre {
+  margin-top: unset;
+  border: 1px solid #c12847;
+}
+
+.reveal h6.code-header + pre code {
+  background: rgba(0, 0, 0, 0.2);
+}

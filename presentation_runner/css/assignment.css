@@ -1,0 +1,99 @@
+@import url("../lib/font/agfa-rotis-semisans/agfa-rotis-semisans.css");
+@import url("https://fonts.googleapis.com/css?family=Abel");
+
+body {
+  background: #fff;
+  background-color: #fff;
+  font-family: "Agfa Rotis Semisans";
+  font-size: 2.0em;
+  font-weight: normal;
+  color: #000; }
+
+::selection {
+  color: #a13b4a;
+  background: #fff;
+  text-shadow: none; }
+
+::-moz-selection {
+  color: #a13b4a;
+  background: #fff;
+  text-shadow: none; }
+
+/*********************************************
+ * HEADERS
+ *********************************************/
+h1,h2,h3,h4,h5,h6 {
+  margin: 20px 0 20px 0;
+  color: #c12847;
+  font-family: "Abel", sans-serif;
+  font-weight: normal;
+  line-height: 1.2;
+  letter-spacing: normal;
+  text-transform: uppercase;
+  text-shadow: none;
+  word-wrap: break-word;
+  text-align: left;}
+
+h1 {
+  font-size: 2.7em;
+  text-shadow: none; }
+
+h2 {
+  font-size: 1.6em;
+  border-bottom: 2px solid;
+  border-bottom-color: c12847; }
+
+h3 {
+  font-size: 1.2em; }
+
+h4 {
+  font-size: 1em; }
+
+/*********************************************
+ * OTHER
+ *********************************************/
+p {
+  margin: 20px 0;
+  line-height: 1.3;
+  font-weight: normal;
+  text-shadow: none;
+  text-align: left;
+  font-size: 1em;}
+
+blockquote {
+  color: #4a4a4a;
+}
+
+code {
+  background: #f8f8f8;
+}
+
+pre.sourceCode {
+  background: #f8f8f8;
+}
+
+div.sourceCode {
+  padding-left: 1.5em;
+  padding-right: 1.5em;
+  margin: 0.25em;
+}
+
+img {
+  max-width: 95%;
+  padding: 0.5em 0em;
+}
+
+ol li::marker {
+  color: #c12847;
+}
+
+blockquote ol {
+  margin-top: unset;
+  margin-bottom: unset;
+}
+
+.container {
+  background-color: #f8f8f8;
+  margin: 0.5em;
+  padding: 0.1em 1em;
+}

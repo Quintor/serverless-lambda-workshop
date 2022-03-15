@@ -1,6 +1,8 @@
-# 23-3_HAN_serverless
+# Serverless Application Development
 
 ## Onderwerpen
+
+> Serverless, AWS Lambda, Serverless Application Model, API Gateway, DynamoDB
 
 ## Materiaal
 
@@ -12,7 +14,19 @@
 
 ## Opdrachtomschrijving
 
-### Maak SAM hello-world project aan
+In deze opdracht maken we gebruik van het Serverless Application Model (SAM) om een simple forum applicatie met maken met AWS Lambda, API Gateway en DynamoDB.
+Om een eenvoudige start te hebben voor de applicatie maken we gebruik van het hello-world template van SAM.
+Hiermee is ook snel de basis ervaring met SAM CLI op te doen.
+Hierna zullen we deze applicatie uitbreiden met een forum POST endpoint voor het publiceren van een bericht en een GET endpoint voor het uitlezen van de berichten op de fora.
+De instructies hiervoor worden stapsgewijs gegeven in deze tutorial.
+Mochten er vragen of problemen zijn dan is het mogelijk om de uitwerking van de opdracht te bekijken in de `uitwerking` folder.
+
+We zullen de applicatie impleme
+
+### Maak het SAM hello-world project aan
+
+Gebruik `sam init` om het _Hello World Example_ project aan te maken.
+Geeft het project de naam die jij er aan wilt geven. 
 
 ```bash
 % sam init
@@ -54,6 +68,18 @@ Cloning from https://github.com/aws/aws-sam-cli-app-templates (process may take 
     
     Next steps can be found in the README file at ./uitwerking/README.md
 ```
+
+Het SAM project is nu aangemaakt en gaan even kijken naar een aantal folders en bestanden.
+De `README.md` bevat de standaard beschrijving en instructies voor de Hello World applicatie.
+Deze inhoud is niet direct nodig voor deze tutorial, maar biedt ook enkele toevoegingen zoals het deployen naar de AWS cloud.
+Het `template.yaml` bevat de SAM template en specificeerd uit welke serverless onderdelen het project bestaat.
+Hierover zo meer.
+De `hello_world` folder bevat de python implementatie van de AWS Lambda.
+De `test` folder met unit- en integratie testen laten we in deze tutorial buiten beschouwing.
+Dit is een workshop op zich.
+In de `events` folder staan Lambda events examples die gebruikt kunnen worden voor het lokaal testen van een Lambda.
+
+We gaan nu het project _bouwen_ zodat we het lokaal kunnen gaan uitvoeren. 
 
 ```bash
 % sam build
@@ -107,4 +133,15 @@ Resources:
           Properties:
             Path: /hello
             Method: get
+```
+
+Wat staat er in de Lambda code?
+```python
+def lambda_handler(event, context):
+    return {
+        "statusCode": 200,
+        "body": json.dumps({
+            "message": "hello world"
+        }),
+    }
 ```

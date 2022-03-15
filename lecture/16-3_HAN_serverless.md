@@ -170,12 +170,6 @@ Note:
 
 # ![](images/serverless-scooby.jpg) <!-- .element: width="400" -->
 
---
-
-<!-- .slide: data-background="white" -->
-
-# ![](images/AWS-Serverless-Archit.png) <!-- .element: width="900" -->
-
 ---
 
 ## Function-as-a-Service
@@ -462,6 +456,12 @@ Note:
 
 ## API Gateway
 ### SAM Example
+
+---
+
+<!-- .slide: data-background="white" -->
+
+# ![](images/AWS-Serverless-Archit.png) <!-- .element: width="900" -->
 
 ---
 

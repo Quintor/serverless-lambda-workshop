@@ -8,22 +8,80 @@
 
 ---
 
-## Programma vandaag
+## Even voorstellen
 
-- Theorie deel 1
-- Hands-on opdracht 1
-- Theorie deel 2
-- Hands-on opdracht 2
+<h4>Arjen Wassink</h4>
+<div class="columns two">
+  <div class="left">
+    <ul>
+      <li>Quintor</li>
+      <li>Cloud Specialist</li>
+      <li>IT Architect</li>
+      <li>BAR HU</li>
+    </ul>
+    <br>
+    <ul>
+      <li>Email: awassink@quintor.nl</li>
+      <li>Twitter: @ArjenWassink</li>
+      <li>LinkedIn: <a href="https://www.linkedin.com/in/arjen-wassink-39204423/">arjen-wassink-39204423</a></li>
+    </ul>
+
+  </div>
+  <div class="right">
+    <img src="images/arjen-wassink.jpg" style="max-height: none" height="200px">
+     <ul>
+      <li><u>Specialisaties:</u></li>
+      <li>IT Architectuur</li>
+      <li>Container technologie</li>
+      <li>Cloud technologie</li>
+      <li>Java Developer (20 jaar)</li>
+    </ul>
+  </div>
+</div>
 
 --
 
-## Programma deel 1
+## Even voorstellen
+
+<h4>Pim Otte</h4>
+<div class="columns two">
+  <div class="left">
+    <ul>
+      <li>Consultant @ Quintor</li>
+    </ul>
+    <br>
+    <ul>
+      <li>Email: p.otte@quintor.nl</li>
+    </ul>
+
+  </div>
+  <div class="right">
+    <img src="images/pim-otte.jpeg" style="max-height: none" height="200px">
+     <ul>
+      <li><u>Specialisaties:</u></li>
+      <li>Blockchain Development</li>
+      <li>Fullstack Java Development</li>
+      <li>Cloud Native Software Development</li>
+    </ul>
+  </div>
+</div>
+
+---
+
+## Programma vandaag
+
+- Theorie
+- Hands-on opdracht
+
+--
+
+## Programma
 
 - Serverless Architecture
 - Function-as-a-Service
-- Architectuur
-- Testruns
-- Concurrency/limits
+- AWS Lambda
+- Serverless Application Model
+- API Gateway
 
 ---
 
@@ -166,7 +224,7 @@ Solutions for caching resources between stateless requests (i.e. DB connections)
 
 ---
 
-## Architectuur
+## AWS Lambda
 
 > Run code without provisioning or managing servers. 
 
@@ -174,7 +232,7 @@ Solutions for caching resources between stateless requests (i.e. DB connections)
 
 --
 
-## Architectuur
+## AWS Lambda
 
 - Runs your code in response to events
 - Manages the underlying compute resources
@@ -190,16 +248,16 @@ Note:
 
 --
 
-## Architectuur
-### Ttriggers
+## AWS Lambda
+### Triggers
 
 # ![](images/AWS-lambda-destinations.png) <!-- .element: width="800"  -->
 
 
 --
 
-## Architectuur
-### Simpel voorbeeld
+## AWS Lambda
+### Simple example
 
 # ![](images/Lambda-HelloWorld.png)
 
@@ -207,8 +265,8 @@ Note:
 --
 
 
-## Architectuur
-### Uitgebreid voorbeeld
+## AWS Lambda
+### DynamoDB Example
 
 ```javascript
 import AWS from 'aws-sdk';
@@ -231,76 +289,36 @@ export async function list() {
 
 --
 
-## Architectuur
+## AWS Lambda
 ### Pricing
 
 # ![](images/AWS-lambda-pricing.png) <!-- .element: width="700"  -->
 
 --
 
-## Architectuur
-### Security
+## AWS Lambda
+### Runtimes
 
-- Lambda's assumen een IAM Role
-    - Moet rechten hebben op eventuele event trigger sources
-    - Moet rechten hebben op eventuele gebruikte resources
-
----
-
-## Talen
-
-- JavaScript / TypeScript <!-- .element: class="fragment" -->
+- JavaScript / TypeScript (Node.js)
 - Python <!-- .element: class="fragment" -->
 - Ruby <!-- .element: class="fragment" -->
-- Go <!-- .element: class="fragment" -->
-- PowerShell <!-- .element: class="fragment" -->
-- C# (.NET Core) <!-- .element: class="fragment" -->
 - Java <!-- .element: class="fragment" -->
-- Custom Runtime API <!-- .element: class="fragment" -->
+- Go <!-- .element: class="fragment" -->
+- C# (.NET Core) <!-- .element: class="fragment" -->
+- Custom Runtime <!-- .element: class="fragment" -->
 
----
+Note:
 
-## Testruns
-
-# ![](images/Lambda-Console-actions.png)  <!-- .element: width="600"  -->
-
-# ![](images/Lambda-Config-test.png)  <!-- .element: width="600"  -->
+<https://docs.aws.amazon.com/lambda/latest/dg/lambda-runtimes.html>
 
 --
 
-## Testruns
-
-# ![](images/Lambda-Test-Result.png)
-
----
-
-## Concurrency
-
-- Maximaal 1000 executies tegelijkertijd <!-- .element: class="fragment" -->
-- Reserved Concurrency per functie => 1 verwerking per Lambda instantie<!-- .element: class="fragment" -->
-- Elke invocatie over limiet resulteert in Throttle <!-- .element: class="fragment" -->
-- Batched verwerking <!-- .element: class="fragment" -->
-
---
-
-## Concurrency
-### Throttle
-
-- Throttle gedrag <!-- .element: class="fragment" -->
-    - Synchrone incovatie -> ThrottleError - HTTP 429 <!-- .element: class="fragment" -->
-    - Asynchrone invocatie -> opnieuw, uiteindelijk DLQ <!-- .element: class="fragment" -->
-
---
-
-## Concurrency
+## AWS Lambda
 ### Lifecycle
 
 # ![](images/AWS-lambda-lifecycle.png) <!-- .element: height="480" -->
 
---
-
-## Concurrency
-### Cold Start
+Note:
 
 - Nieuwe instantie -> code inladen en code buiten handler uitvoeren (init) <!-- .element: class="fragment" -->
 - Init kan even duren als veel wordt geïnitialiseerd (code, dependencies, SDK). <!-- .element: class="fragment" -->
@@ -308,63 +326,12 @@ export async function list() {
 
 --
 
-## Concurrency
-### Cold Start
-
-# ![](images/Lambda-Init.png)
-
---
-
 <!-- .slide: data-background="white" -->
 
-## Concurrency
+## AWS Lambda
 ### Cold Start
 
 # ![](images/AWS-lambda-Cold-Starts.jpg) <!-- .element: height="480" -->
-
----
-
-## Limits
-### Uitvoeren
-
-- RAM: 128 MB - 3008 MB (in stappen van 64 MB) <!-- .element: class="fragment" -->
-- Maximale duur: 900 seconden (15 min) <!-- .element: class="fragment" -->
-- 4 KB aan Environment Variables <!-- .element: class="fragment" -->
-- 1000 concurrent executies <!-- .element: class="fragment" -->
-
---
-
-## Limits
-### Deployen
-
-- Online Lambda code: 3 MB <!-- .element: class="fragment" -->
-- Grootte Lambda function bij deployment (.zip): 50 MB <!-- .element: class="fragment" -->
-- Maximale grootte code + dependencies: 250 MB <!-- .element: class="fragment" -->
-
----
-
-<!-- .slide: data-background="images/skyline_dark.png", data-background-transition="slide" -->
-
-<br>
-<br>
-
-### Vragen?
-
-> Einde deel 1
-
----
-
-## Opdracht 1
-
-> 
-
----
-
-## Programma deel 2
-
-- Serverless Application Model
-- API Gateway
-- Stages
 
 ---
 
@@ -411,13 +378,11 @@ Note:
 ## Serverless Application Model
 ### SAM resources
 
-- AWS::Serverless::Api
-- AWS::Serverless::Application
 - AWS::Serverless::Function
-- AWS::Serverless::HttpApi
-- AWS::Serverless::LayerVersion
-- AWS::Serverless::SimpleTable
-- AWS::Serverless::StateMachine
+- AWS::Serverless::Api <!-- .element: class="fragment" -->
+- AWS::Serverless::HttpApi <!-- .element: class="fragment" -->
+- AWS::Serverless::StateMachine <!-- .element: class="fragment" -->
+- AWS::Serverless::SimpleTable <!-- .element: class="fragment" -->
 
 --
 
@@ -486,58 +451,26 @@ Note:
 
 ## API Gateway
 
-- Fully managed service voor maken, aanbieden, beheren van API's <!-- .element: class="fragment" -->
-- 'Voordeur' van een applicatie <!-- .element: class="fragment" -->
-- RESTful en WebSocket APIs <!-- .element: class="fragment" -->
+- Fully managed service for serving and managing APIs
+- HTTP, RESTful and WebSocket APIs <!-- .element: class="fragment" -->
+- Frontdoor to application <!-- .element: class="fragment" -->
+    - Request proxying too AWS Lambda targets
 
 # ![](images/AWS-APIGateway.png) <!-- .element: class="fragment" width="800" -->
 
 --
 
 ## API Gateway
-### RESTful API
-
-- Stateless frontend voor aanroepen AWS Service of HTTP endpoint <!-- .element: class="fragment" -->
-- Communicatie alleen van client naar backend <!-- .element: class="fragment" -->
-- Stuurt http aanvragen door naar ingestelde target <!-- .element: class="fragment" -->
-
----
-
-## Stages
-
-- Een stage is een snapshot van een API <!-- .element: class="fragment" -->
-- Stages hebben eigen endpoints en instellingen <!-- .element: class="fragment" -->
-- Stages kunnen naast elkaar beschikbaar zijn <!-- .element: class="fragment" -->
-- Elke stage heeft versiebeheer <!-- .element: class="fragment" -->
-
-# ![](images/AWS-APIGateway-stages.png) <!-- .element: class="fragment" -->
-
---
-
-## Stages
-### Stage variables
-
-- De environment variables van API Gateway <!-- .element: class="fragment" -->
-- Aanpassen configuration zonder nieuwe deployment <!-- .element: class="fragment" -->
-- Bijvoorbeeld Lambda ARN of HTTP endpoint <!-- .element: class="fragment" -->
-- Usecase: endpoints aanpassen per stage <!-- .element: class="fragment" -->
-- Stage variables worden doorgegeven aan aangeroepen Lambda functie <!-- .element: class="fragment" -->
-
---
-
-## Stages
-### Stage variables
-
-# ![](images/AWS-APIGateway-alias.png)
+### SAM Example
 
 ---
 
 ### Vragen?
 
-> Einde deel 2
+> Einde
 
 ---
 
-## Opdracht 2
+## Hand-on Opdracht
 
 > 

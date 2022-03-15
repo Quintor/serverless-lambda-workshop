@@ -1,8 +1,9 @@
 import json
 import boto3
 import uuid
+import os
 
-dynamodb = boto3.resource('dynamodb', endpoint_url="http://172.17.0.1:8000") 
+dynamodb = boto3.resource('dynamodb', endpoint_url=os.environ['AWS_DYNAMODB_ENDPOINT']) 
 
 def lambda_handler(event, context):
     recordId = str(uuid.uuid4())

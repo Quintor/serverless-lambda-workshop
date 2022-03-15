@@ -11,15 +11,6 @@ Globals:
     Timeout: 3
 
 Resources:
-  # TABLES
-  TopicTable:
-    Type: AWS::Serverless::SimpleTable
-    Properties:
-      PrimaryKey:
-        Name: id
-        Type: String
-      TableName: SimpleTopicTable
-
   # FUNCTIONS
   HelloWorldFunction:
     Type: AWS::Serverless::Function # More info about Function Resource: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#awsserverlessfunction
@@ -39,7 +30,7 @@ Resources:
       CodeUri: get_all_messages/
       Environment:
         Variables:
-          AWS_DYNAMODB_ENDPOINT: http://localhost:8000
+          AWS_DYNAMODB_ENDPOINT: http://172.17.0.1:8000
       Handler: app.lambda_handler
       Runtime: python3.8
       Events:
@@ -54,7 +45,7 @@ Resources:
       CodeUri: post_new_message/
       Environment:
         Variables:
-          AWS_DYNAMODB_ENDPOINT: http://localhost:8000
+          AWS_DYNAMODB_ENDPOINT: http://172.17.0.1:8000
       Handler: app.lambda_handler
       Runtime: python3.8
       Events:

@@ -2,7 +2,7 @@ import json
 import boto3
 import uuid
 
-dynamodb = boto3.resource('dynamodb')
+dynamodb = boto3.resource('dynamodb', endpoint_url="http://172.17.0.1:8000") 
 
 def lambda_handler(event, context):
     recordId = str(uuid.uuid4())
@@ -23,5 +23,5 @@ def lambda_handler(event, context):
 
     return {
         "statusCode": 200,
-        "body": recordId
+        "body": str(recordId)
     }

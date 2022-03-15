@@ -1,7 +1,8 @@
 import json
 import boto3
+import os
 
-dynamodb = boto3.resource('dynamodb', endpoint_url="http://172.17.0.1:8000") 
+dynamodb = boto3.resource('dynamodb', endpoint_url=os.environ['AWS_DYNAMODB_ENDPOINT']) 
 
 def lambda_handler(event, context):
     table = dynamodb.Table('SimpleTopicTable')

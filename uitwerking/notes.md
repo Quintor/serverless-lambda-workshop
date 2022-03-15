@@ -14,5 +14,5 @@
 - Add dynamodb local to lambda function environment
     - > Environment:
         Variables:
-          AWS_DYNAMODB_ENDPOINT: http://localhost:8000
+          AWS_DYNAMODB_ENDPOINT: http://172.17.0.1:8000
         

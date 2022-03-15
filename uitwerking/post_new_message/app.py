@@ -9,6 +9,7 @@ def lambda_handler(event, context):
     recordId = str(uuid.uuid4())
     body = json.loads(event['body'])
     message = body['message']
+    topic = body['topic']
 
     print('Generating new DynamoDB record, with ID: ' + recordId)
     print('Input message: ' + message)
@@ -19,6 +20,7 @@ def lambda_handler(event, context):
         Item={
             'id' : recordId,
             'message' : message,
+            'topic': topic
         }
     )
 

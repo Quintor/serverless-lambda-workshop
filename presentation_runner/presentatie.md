@@ -1,1 +1,1 @@
-../lecture/16-3_HAN_serverless.md
+../lecture/serverless.md

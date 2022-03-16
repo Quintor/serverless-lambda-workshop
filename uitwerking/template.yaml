@@ -24,7 +24,7 @@ Resources:
           Properties:
             Path: /hello
             Method: get
-  GetAllMessagesFunction:
+  GetMessagesFunction:
     Type: AWS::Serverless::Function
     Properties:
       CodeUri: get_all_messages/
@@ -34,12 +34,12 @@ Resources:
       Handler: app.lambda_handler
       Runtime: python3.8
       Events:
-        HelloWorld:
+        GetMessages:
           Type: Api
           Properties:
             Path: /messages
             Method: get
-  WriteNewMessageFunction:
+  PostNewMessageFunction:
     Type: AWS::Serverless::Function
     Properties:
       CodeUri: post_new_message/
@@ -49,7 +49,7 @@ Resources:
       Handler: app.lambda_handler
       Runtime: python3.8
       Events:
-        HelloWorld:
+        PostMessages:
           Type: Api
           Properties:
             Path: /messages

@@ -148,6 +148,58 @@ def lambda_handler(event, context):
 
 ### Voeg een Lambda toe voor het posten van een message naar een forum topic
 
+Voeg de nieuwe folder `post_new_message` toe voor de nieuwe lambda implementatie.
+Kopieer de bestanden van de `hello_world` folder in deze folder.
+Deze bestanden kunnen we als basis voor de lambda gebruiken.
+Open het `app.py` bestand om de sourcecode aan te passen voor de implementatie van de functie.
+In deze lambda verwachten we een request body in JSON-formaat met een message en topic waarde.
+Bijvoorbeeld `{"message":"hello world","topic":"greetings"}`.
+Deze body kunnen we uitlezen uit het lambda event dat als argument aan de handler functie meegegeven wordt.
+Meer details over de Lambda handler functie in python is hier te vinden: <https://docs.aws.amazon.com/lambda/latest/dg/python-handler.html>.
+We printen de ontvangen waarden naar de console zodat we kunnen controleren of deze goed geïnterpreteerd worden.
+
+```python
+def lambda_handler(event, context):
+    body = json.loads(event['body'])
+    message = body['message']
+    topic = body['topic']
+
+    print('Input message: ' + message + " for topic: " + topic)
+
+    return {
+        "statusCode": 200
+    }
+```
+
+Nu we de basis implementatie gereed hebben kunnen we de SAM `template.yaml` aanpassen zodat de 
+
+```yaml
+  PostNewMessageFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: post_new_message/
+      Handler: app.lambda_handler
+      Runtime: python3.8
+      Events:
+        PostMessages:
+          Type: Api
+          Properties:
+            Path: /messages
+            Method: post
+```
+
+Laten we de nieuwe endpoint testen.
+Stop eerder applicatie versie, bouw de SAM applicatie (`sam build`) en start deze weer (`sam local start-api`).
+Roep nu de `http://127.0.0.1:3000/messages` endpoint met een POST method en de verwachte request body aan.
+Dit kan met het gegeven `curl` commando van hieronder, maar ook met andere tools zoals Postman.
+Controleer dat de aanroep succesvol is en de juiste logging weergegeven wordt door de Lambda functie.
+
+```bash
+% curl -X POST http://127.0.0.1:3000/messages -H 'Content-Type: application/json' -d '{"message":"hello world","topic":"greetings"}'
+```
+
+### Gebruik DynamoDB om de forum messages op te slaan
+
 Start DynamoDB lokaal
 ```bash
 docker run -p 8000:8000 amazon/dynamodb-local -jar DynamoDBLocal.jar -sharedDb
@@ -169,16 +221,10 @@ Bekijk de inhoud van de table
 }
 ```
 
-Voeg de nieuwe folder toe voor de post new message lambda.
-Kopieer de bestanden van de `hello_world` folder in de nieuwe folder.
-Deze bestanden kunnen we als basis gebruiken voor de nieuwe Lambda.
-Open het `app.py` bestand om de sourcecode aan te passen voor de implementatie van het opslaan van de message in de DynamoDB table `SimpleTopicTable`.
-
-```python
-
-```
-
-
+Binnen docker containers verwijst ip-adres `172.17.0.1` naar het host systeem waar de Docker engine zich op bevind.
+Meer info hierover is te vinden op <https://www.baeldung.com/linux/docker-connecting-containers-to-host>.
+Omdat we de lokale DynamoDB container aan port `8000` op het lokale systeem gebonden hebben, is de lokale DynamoDB endpoint te benaderen op `http://172.17.0.1:8000` vanuit een Docker container.
+Voeg de `AWS_DYNAMODB_ENDPOINT` environmentvariabele toe aan de Lambda configuratie in de SAM `template.yaml` zodat we die kunnen gebruiken in onze lambda implementatie.
 ```yaml
   WriteNewMessageFunction:
     Type: AWS::Serverless::Function
@@ -188,14 +234,9 @@ Open het `app.py` bestand om de sourcecode aan te passen voor de implementatie v
         Variables:
           AWS_DYNAMODB_ENDPOINT: http://172.17.0.1:8000
       Handler: app.lambda_handler
-      Runtime: python3.8
-      Events:
-        HelloWorld:
-          Type: Api
-          Properties:
-            Path: /messages
-            Method: post
+      ...
 ```
+
 
 ### Voeg een Lambda toe voor het ophalen van alle messages
 

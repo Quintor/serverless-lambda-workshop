@@ -6,13 +6,14 @@ import os
 dynamodb = boto3.resource('dynamodb', endpoint_url=os.environ['AWS_DYNAMODB_ENDPOINT']) 
 
 def lambda_handler(event, context):
-    recordId = str(uuid.uuid4())
     body = json.loads(event['body'])
     message = body['message']
     topic = body['topic']
 
+    print('Input message: ' + message + " for topic: " + topic)
+
+    recordId = str(uuid.uuid4())
     print('Generating new DynamoDB record, with ID: ' + recordId)
-    print('Input message: ' + message)
 
     #Creating new record in DynamoDB table
     table = dynamodb.Table('SimpleTopicTable')

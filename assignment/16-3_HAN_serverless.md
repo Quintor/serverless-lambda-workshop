@@ -145,3 +145,58 @@ def lambda_handler(event, context):
         }),
     }
 ```
+
+### Voeg een Lambda toe voor het posten van een message naar een forum topic
+
+Start DynamoDB lokaal
+```bash
+docker run -p 8000:8000 amazon/dynamodb-local -jar DynamoDBLocal.jar -sharedDb
+```
+
+Creeer de DynamoDB Table
+```bash
+aws dynamodb create-table --table-name SimpleTopicTable --attribute-definitions AttributeName=id,AttributeType=S --key-schema AttributeName=id,KeyType=HASH --provisioned-throughput ReadCapacityUnits=1,WriteCapacityUnits=1 --endpoint-url http://localhost:8000
+```
+
+Bekijk de inhoud van de table
+```bash
+% aws dynamodb scan --table-name SimpleTopicTable --endpoint-url http://localhost:8000                                                                                                                                                                              
+{
+    "Items": [],
+    "Count": 0,
+    "ScannedCount": 0,
+    "ConsumedCapacity": null
+}
+```
+
+Voeg de nieuwe folder toe voor de post new message lambda.
+Kopieer de bestanden van de `hello_world` folder in de nieuwe folder.
+Deze bestanden kunnen we als basis gebruiken voor de nieuwe Lambda.
+Open het `app.py` bestand om de sourcecode aan te passen voor de implementatie van het opslaan van de message in de DynamoDB table `SimpleTopicTable`.
+
+```python
+
+```
+
+
+```yaml
+  WriteNewMessageFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: post_new_message/
+      Environment:
+        Variables:
+          AWS_DYNAMODB_ENDPOINT: http://172.17.0.1:8000
+      Handler: app.lambda_handler
+      Runtime: python3.8
+      Events:
+        HelloWorld:
+          Type: Api
+          Properties:
+            Path: /messages
+            Method: post
+```
+
+### Voeg een Lambda toe voor het ophalen van alle messages
+
+#### Pas de Lambda aan zodat alleen de messages van een gegeven topic opgehaald worden

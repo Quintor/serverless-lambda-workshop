@@ -7,7 +7,7 @@ dynamodb = boto3.resource('dynamodb', endpoint_url=os.environ['AWS_DYNAMODB_ENDP
 def lambda_handler(event, context):
     table = dynamodb.Table('SimpleTopicTable')
 
-    topicFilter = event['queryStringParameters']['topic']
+    # topicFilter = event['queryStringParameters']['topic']
 
 
     data = table.scan()
@@ -15,9 +15,9 @@ def lambda_handler(event, context):
 
     print('Scanned messages: ' + str(data['Count']))
 
-    if topicFilter:
-        print('Received topicFilter: ' + topicFilter)
-        items = { key:value for (key,value) in items if key == 'topic' value == topicFilter}
+    # if topicFilter:
+    #     print('Received topicFilter: ' + topicFilter)
+    #     items = { key:value for (key,value) in items if key == 'topic' value == topicFilter}
 
     return {
         "statusCode": 200,

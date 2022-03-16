@@ -5,7 +5,7 @@ import os
 dynamodb = boto3.resource('dynamodb', endpoint_url=os.environ['AWS_DYNAMODB_ENDPOINT']) 
 
 def lambda_handler(event, context):
-    table = dynamodb.Table('SimpleTopicTable')
+    table = dynamodb.Table('ForumTable')
 
     # topicFilter = event['queryStringParameters']['topic']
 

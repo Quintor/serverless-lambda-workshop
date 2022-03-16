@@ -200,19 +200,35 @@ Controleer dat de aanroep succesvol is en de juiste logging weergegeven wordt do
 
 ### Gebruik DynamoDB om de forum messages op te slaan
 
-Start DynamoDB lokaal
+Lambda functies zijn stateless en kunnen gestart en gestopt worden door het platform wanneer dat gewenst is.
+Het is dus praktisch niet mogelijk om data vast te houden in een Lambda functie, daarvoor is database voor benodigd.
+DynamoDB is een serverless column-based NoSQL database die goed te gebruiken is vanuit Lambda functies.
+DynamoDB is ook lokaal te gebruiken, als Java applicatie of Docker container, zoals wij nu gaan doen.
+Zie ook <https://hub.docker.com/r/amazon/dynamodb-local> voor meer informatie.
+
+Start de `dynamodb-local` met het onderstaande `docker` commando.
+Dit commando bind de DynamoDB applicatie in de container aan portnummer `8000` op het lokale systeem zodat wij die kunnen gebruiken.
+
 ```bash
-docker run -p 8000:8000 amazon/dynamodb-local -jar DynamoDBLocal.jar -sharedDb
+% docker run -p 8000:8000 amazon/dynamodb-local -jar DynamoDBLocal.jar -sharedDb
 ```
 
-Creeer de DynamoDB Table
+We starten dynamodb-local met de `-sharedDb` optie om problemen te voorkomen door verschil van region configuratie tussen het lokale systeem en de lambda runtime.
+Zie <https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/DynamoDBLocal.UsageNotes.html> voor meer informatie.
+
+Het eerste om nu te doen is de `ForumTable` table aanmaken in DynamoDB.
+Dit kunnen we met het onderstaande commando.
+Zie ook dat we hier verwijzen naar het lokale DynamoDB endpoint (`--endpoint-url http://localhost:8000`).
+Het commando toont de beschrijving van de aangemaakte tabel en deze kan met `q` gesloten worden. 
+
 ```bash
-aws dynamodb create-table --table-name SimpleTopicTable --attribute-definitions AttributeName=id,AttributeType=S --key-schema AttributeName=id,KeyType=HASH --provisioned-throughput ReadCapacityUnits=1,WriteCapacityUnits=1 --endpoint-url http://localhost:8000
+% aws dynamodb create-table --table-name ForumTable --attribute-definitions AttributeName=id,AttributeType=S --key-schema AttributeName=id,KeyType=HASH --provisioned-throughput ReadCapacityUnits=1,WriteCapacityUnits=1 --endpoint-url http://localhost:8000
 ```
 
-Bekijk de inhoud van de table
+Met het onderstaande commando kunnen we controleren dat de tabel is aangemaakt en wat de inhoud is (leeg voor nu).
+
 ```bash
-% aws dynamodb scan --table-name SimpleTopicTable --endpoint-url http://localhost:8000                                                                                                                                                                              
+% aws dynamodb scan --table-name ForumTable --endpoint-url http://localhost:8000                                                                                                                                                                              
 {
     "Items": [],
     "Count": 0,
@@ -224,7 +240,8 @@ Bekijk de inhoud van de table
 Binnen docker containers verwijst ip-adres `172.17.0.1` naar het host systeem waar de Docker engine zich op bevind.
 Meer info hierover is te vinden op <https://www.baeldung.com/linux/docker-connecting-containers-to-host>.
 Omdat we de lokale DynamoDB container aan port `8000` op het lokale systeem gebonden hebben, is de lokale DynamoDB endpoint te benaderen op `http://172.17.0.1:8000` vanuit een Docker container.
-Voeg de `AWS_DYNAMODB_ENDPOINT` environmentvariabele toe aan de Lambda configuratie in de SAM `template.yaml` zodat we die kunnen gebruiken in onze lambda implementatie.
+Voeg de `AWS_DYNAMODB_ENDPOINT` environment variabele toe aan de Lambda configuratie in de SAM `template.yaml` zodat we die kunnen gebruiken in onze lambda implementatie.
+
 ```yaml
   WriteNewMessageFunction:
     Type: AWS::Serverless::Function
@@ -237,6 +254,45 @@ Voeg de `AWS_DYNAMODB_ENDPOINT` environmentvariabele toe aan de Lambda configura
       ...
 ```
 
+Nu is het moment om de implementatie van de lambda functie uit te bereiden met de opslag in de `ForumTable`. 
+Er zijn een drietal imports die toegevoegd dienen te worden voor `boto3`, `uuid` en `os`.
+`boto3` is de AWS SDK voor python en kan gebruikt worden voor nagenoeg alle AWS services, o.a. voor DynamoDB zoals wij gaan toepassen.
+<https://github.com/boto/boto3> geeft meer informatie over de `boto3` SDK.
+Om acties uit te voeren op DynamoDB is er een client nodig.
+Deze kan verkregen worden via `boto3.resource()`. Zie ook dat via de environment variabele `AWS_DYNAMODB_ENDPOINT` de eerder geconfigureerde lokaal endpoint gezet wordt voor de client.
+
+```python
+import boto3
+import uuid
+import os
+
+dynamodb = boto3.resource('dynamodb', endpoint_url=os.environ['AWS_DYNAMODB_ENDPOINT']) 
+```
+
+Voeg de python code toe voor het opslaan van het forum message in de `ForumTable` en pas het return-statement aan zodat deze het opgeslagen object als body in de response meegegeven wordt.
+Meer informatie over CRUD-operaties op DynamoDB tabellen met `boto3` is hier te vinden <https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/GettingStarted.Python.03.html>.
+
+```python
+
+    recordId = str(uuid.uuid4())
+    print('Generating new DynamoDB record, with ID: ' + recordId)
+    item = {
+        'id' : recordId,
+        'message' : message,
+        'topic': topic
+    }
+
+    # Creating new record in DynamoDB table
+    table = dynamodb.Table('ForumTable')
+    table.put_item(
+        Item=item
+    )
+
+    return {
+        "statusCode": 200,
+        "body": str(item)
+    }
+```
 
 ### Voeg een Lambda toe voor het ophalen van alle messages
 

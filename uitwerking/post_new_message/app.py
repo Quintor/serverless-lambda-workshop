@@ -14,18 +14,19 @@ def lambda_handler(event, context):
 
     recordId = str(uuid.uuid4())
     print('Generating new DynamoDB record, with ID: ' + recordId)
+    item = {
+        'id' : recordId,
+        'message' : message,
+        'topic': topic
+    }
 
-    #Creating new record in DynamoDB table
-    table = dynamodb.Table('SimpleTopicTable')
+    # Creating new record in DynamoDB table
+    table = dynamodb.Table('ForumTable')
     table.put_item(
-        Item={
-            'id' : recordId,
-            'message' : message,
-            'topic': topic
-        }
+        Item=item
     )
 
     return {
         "statusCode": 200,
-        "body": str(recordId)
+        "body": str(item)
     }

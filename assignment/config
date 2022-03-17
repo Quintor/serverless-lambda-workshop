@@ -1,0 +1,5 @@
+[profile devops]
+region = eu-west-1
+[default]
+region = eu-central-1
+output = json

@@ -275,8 +275,7 @@ Het commando toont de beschrijving van de aangemaakte tabel en deze kan met `q` 
 % aws dynamodb create-table --table-name ForumTable --attribute-definitions AttributeName=id,AttributeType=S --key-schema AttributeName=id,KeyType=HASH --provisioned-throughput ReadCapacityUnits=1,WriteCapacityUnits=1 --endpoint-url http://localhost:8000 --region local
 ```
 
-Als de client klaagt over missende region kan je [config](config) in de `.aws` map in je home directory plaatsen. Als de client klaagt over missende
-credentials kan je [credentials](./credentials) in dezelfde map plaatsen.
+Als de client klaagt over missende region of credentials kan je deze met `aws configure` instellen. Je hoeft geen geldige key of id in te vullen (`X` is prima)
 
 Met het onderstaande commando kunnen we controleren dat de tabel is aangemaakt en wat de inhoud is (leeg voor nu).
 

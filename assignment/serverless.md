@@ -14,16 +14,24 @@
 
 ## Opdrachtomschrijving
 
-In deze opdracht maken we gebruik van het Serverless Application Model (SAM) om een simple forum applicatie met maken met AWS Lambda, API Gateway en DynamoDB.
+In deze opdracht maken we gebruik van het Serverless Application Model (SAM) om een simpele forum applicatie met maken met AWS Lambda, API Gateway en DynamoDB.
 Om een eenvoudige start te hebben voor de applicatie maken we gebruik van het hello-world template van SAM.
-Hiermee is ook snel de basis ervaring met SAM CLI op te doen.
-Hierna zullen we deze applicatie uitbreiden met een forum POST endpoint voor het publiceren van een bericht en een GET endpoint voor het uitlezen van de berichten op de fora.
+Hiermee is snel de basis ervaring met SAM CLI op te doen.
+Daarna zullen we de applicatie uitbreiden met een forum POST endpoint voor het publiceren van een bericht en een GET endpoint voor het uitlezen van de berichten op het forum.
 De instructies hiervoor worden stapsgewijs gegeven in deze tutorial.
 Mochten er vragen of problemen zijn dan is het mogelijk om de uitwerking van de opdracht te bekijken in de `uitwerking` folder.
 
-We zullen de applicatie impleme
+### Voorbereiding
 
-### Maak het SAM hello-world project aan
+Voordat je met de tutorial aan de slag gaat zal de benodige software geïnstalleerd moeten zijn op het lokale systeem.
+- [Python](https://realpython.com/installing-python/)
+- [AWS CLI](https://aws.amazon.com/cli/)
+- [AWS SAM CLI](https://docs.aws.amazon.com/serverless-application-model/latest/developerguide/serverless-sam-cli-install.html)
+- [Docker](https://docs.docker.com/engine/install/)
+
+Als alles beschikbaar is op het lokale systeem kunnen we aan de slag gaan.
+
+### De eerste stappen met het SAM hello-world project
 
 Gebruik `sam init` om het _Hello World Example_ project aan te maken.
 Geeft het project de naam die jij er aan wilt geven. 
@@ -71,15 +79,17 @@ Cloning from https://github.com/aws/aws-sam-cli-app-templates (process may take 
 
 Het SAM project is nu aangemaakt en gaan even kijken naar een aantal folders en bestanden.
 De `README.md` bevat de standaard beschrijving en instructies voor de Hello World applicatie.
-Deze inhoud is niet direct nodig voor deze tutorial, maar biedt ook enkele toevoegingen zoals het deployen naar de AWS cloud.
-Het `template.yaml` bevat de SAM template en specificeerd uit welke serverless onderdelen het project bestaat.
+Deze inhoud is niet direct nodig voor deze tutorial, maar biedt ook enkele toevoegingen zoals het deployen naar de AWS-cloud.
+Het `template.yaml` bevat de SAM template en specificeert uit welke serverless onderdelen het project bestaat.
 Hierover zo meer.
 De `hello_world` folder bevat de python implementatie van de AWS Lambda.
 De `test` folder met unit- en integratie testen laten we in deze tutorial buiten beschouwing.
 Dit is een workshop op zich.
 In de `events` folder staan Lambda events examples die gebruikt kunnen worden voor het lokaal testen van een Lambda.
 
-We gaan nu het project _bouwen_ zodat we het lokaal kunnen gaan uitvoeren. 
+We gaan nu het project _bouwen_ (`sam build`) zodat we het lokaal kunnen gaan uitvoeren.
+Het kan soms voorkomen dat de build faalt i.v.m. een versie conflict met python op je lokale systeem.
+In dat geval kun je `sam build --use-container` gebruiken, wat een Docker container gebruikt met een specifieke compatible python versie.
 
 ```bash
 % sam build
@@ -93,6 +103,11 @@ Build Succeeded
 Built Artifacts  : .aws-sam/build
 Built Template   : .aws-sam/build/template.yaml
 ```
+
+Voor het uitvoeren van Lambda's op een lokaal systeem gebruikt SAM CLI Docker containers met een specifieke SAM emulation image.
+Een Lambda functie is eenvoudig eenmalig uit te voeren via `sam local invoke`, waarbij de Lambda code aangeroepen wordt met het gegeven event.
+Dit is een makkelijke manier om een specifieke aanroep van de functie te testen.
+
 ```bash
 % sam local invoke HelloWorldFunction --event events/event.json
 Invoking app.lambda_handler (python3.9)
@@ -107,16 +122,43 @@ START RequestId: 6e0167cd-c9e2-4af8-af4c-90d67af7e724 Version: $LATEST
 REPORT RequestId: 6e0167cd-c9e2-4af8-af4c-90d67af7e724  Init Duration: 0.76 ms  Duration: 179.69 ms     Billed Duration: 180 ms Memory Size: 128 MB     Max Memory Used: 128 MB 
 ```
 
+De `HelloWorldFunction` biedt ook een REST endpoint aan. 
+Die kunnen we lokaal starten via `sam local start-api`.
+
 ```bash
 % sam local start-api
 Mounting HelloWorldFunction at http://127.0.0.1:3000/hello [GET]
 You can now browse to the above endpoints to invoke your functions. You do not need to restart/reload SAM CLI while working on your functions, changes will be reflected instantly/automatically. You only need to restart SAM CLI if you update your AWS SAM template
 2022-03-15 20:15:24  * Running on http://127.0.0.1:3000/ (Press CTRL+C to quit)
+```
+
+Eenmaal gestart kunnen we de gegeven endpoint aanroepen met bijvoorbeeld het `curl` commando hieronder, gebruikmakend van een browser of een andere tool zoals [Postman](https://www.postman.com/downloads/). 
+
+```bash
 % curl http://localhost:3000/hello
 {"message": "hello world"}%
 ```
 
-Wat staat er in de SAM template?
+#### Wat staat er in de SAM `template.yaml`?
+
+De SAM `template.yaml` specificeert uit welke resources (onderdelen) de applicatie bestaat en hoe die geconfigureerd dienen te zijn.
+Het is wat men noemt een 'desired state' configuratie en kan gebruikt worden om de serverless applicatie exact zoals gespecificeerd is te configureren in de AWS-cloud.
+SAM maakt hiervoor gebruik van [CloudFormation](https://aws.amazon.com/cloudformation/), een Infrastructure-as-Code oplossing, maar dat gaat buiten het doel van deze workshop.
+Dezelfde SAM `template.yaml` kunnen we i.c.m. SAM CLI ook gebruiken om Lambda functies lokaal uit te voeren en dat is wat we in deze woorkshop doen.
+
+De belangrijkste deel in de `template.yaml` is de `Resources` sectie.
+Hierin worden alle serverless resources, Lambda functies in ons geval, gedefinieerd.
+Zie hieronder het voorbeeld van de `HelloWorldFunction` welke van het type `AWS::Serverless::Function` (lambda) is.
+Deze heeft een aantal properties:
+- `CodeUri` geeft aan in welke folder van het project de sourcecode van de functie staat.
+- `Handler` geeft aan welke file en methode voor de afhandeling van een invocatie uitgevoerd wordt.
+- `Runtime` geeft de Lambda runtime aan die gebruikt moet worden.
+
+Daarnaast kunnen de `Events` gespecificeerd worden die een invocatie van veroorzaken.
+In dit geval is het `HelloWorld` event van het type `API`, wat betekend dat het een API Gateway mapping is van een REST/HTTP request met URL path `/hello` en HTTP Method `GET`.
+
+Veel meer details over de SAM template is hier te vinden: <https://docs.aws.amazon.com/serverless-application-model/latest/developerguide/sam-specification-template-anatomy.html>
+
 ```yaml
 Resources:
   HelloWorldFunction:
@@ -135,7 +177,16 @@ Resources:
             Method: get
 ```
 
-Wat staat er in de Lambda code?
+#### Wat staat er in de Lambda code?
+
+In de `app.py` file staat de lambda functie implementatie.
+Belangrijkste hierin is de `lambda_handler(event, context)` functie definitie.
+Dit is de functie die door de Lambda runtime aangeroepen wordt, zoals geconfigureerd in de `ttemplate.yaml`.
+Het `event` argument bevat de data van het event wat de lambda triggered.
+In ons geval een HTTP request, zie ook [events/event.json](../uitwerking/events/event.json).
+Om een HTTP response terug te geven wordt een object geretourneerd in de code met de properties benodigd voor de response.
+Meer details over de Lambda handler functie in python is hier te vinden: <https://docs.aws.amazon.com/lambda/latest/dg/python-handler.html>.
+
 ```python
 def lambda_handler(event, context):
     return {
@@ -155,7 +206,6 @@ Open het `app.py` bestand om de sourcecode aan te passen voor de implementatie v
 In deze lambda verwachten we een request body in JSON-formaat met een message en topic waarde.
 Bijvoorbeeld `{"message":"hello world","topic":"greetings"}`.
 Deze body kunnen we uitlezen uit het lambda event dat als argument aan de handler functie meegegeven wordt.
-Meer details over de Lambda handler functie in python is hier te vinden: <https://docs.aws.amazon.com/lambda/latest/dg/python-handler.html>.
 We printen de ontvangen waarden naar de console zodat we kunnen controleren of deze goed geïnterpreteerd worden.
 
 ```python
@@ -292,6 +342,12 @@ Meer informatie over CRUD-operaties op DynamoDB tabellen met `boto3` is hier te 
         "statusCode": 200,
         "body": str(item)
     }
+```
+
+Bouw en start de nieuwe versie van de functie en test het opslaan van geposte messages in de `ForumTable`. 
+
+```bash
+% aws dynamodb scan --table-name ForumTable --endpoint-url http://localhost:8000                                                                                                                                                                              
 ```
 
 ### Voeg een Lambda toe voor het ophalen van alle messages

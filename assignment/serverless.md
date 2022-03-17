@@ -272,8 +272,11 @@ Zie ook dat we hier verwijzen naar het lokale DynamoDB endpoint (`--endpoint-url
 Het commando toont de beschrijving van de aangemaakte tabel en deze kan met `q` gesloten worden. 
 
 ```bash
-% aws dynamodb create-table --table-name ForumTable --attribute-definitions AttributeName=id,AttributeType=S --key-schema AttributeName=id,KeyType=HASH --provisioned-throughput ReadCapacityUnits=1,WriteCapacityUnits=1 --endpoint-url http://localhost:8000
+% aws dynamodb create-table --table-name ForumTable --attribute-definitions AttributeName=id,AttributeType=S --key-schema AttributeName=id,KeyType=HASH --provisioned-throughput ReadCapacityUnits=1,WriteCapacityUnits=1 --endpoint-url http://localhost:8000 --region local
 ```
+
+Als de client klaagt over missende region kan je [config](config) in de `.aws` map in je home directory plaatsen. Als de client klaagt over missende
+credentials kan je [credentials](./credentials) in dezelfde map plaatsen.
 
 Met het onderstaande commando kunnen we controleren dat de tabel is aangemaakt en wat de inhoud is (leeg voor nu).
 

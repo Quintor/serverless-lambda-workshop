@@ -381,4 +381,4 @@ Bouw en start de nieuwe versie van de functie en test dat alle records in de tab
 
 ### Pas de Lambda aan zodat alleen de messages van een gegeven topic opgehaald worden
 
-<TODO>
+Doe dit door een queryParameter mee te geven. Vervolgens kan je met behulp van een FilterExpression de scan beperken tot een bepaald topic.

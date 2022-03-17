@@ -33,6 +33,46 @@
   </div>
 </div>
 
+--
+
+<img src="images/logo.png" style="max-height: none; border:0; background: transparent; box-shadow: none" height="100px">
+
+<div class="columns two">
+  <div class="left">
+    <ul>
+      <li>Java</li>
+      <li>.Net</li>
+      <li>Frontend</li>
+      <li>Platform Engineering</li>
+      <li>Security</li>
+      <li>Agile Analyse</li>
+    </ul>
+
+  </div>
+  <div class="right">
+     <ul>
+      <li>Den Haag</li>
+      <li>Den Bosch</li>
+      <li>Amersfoort</li>
+      <li>Deventer</li>
+      <li>Groningen</li>
+    </ul>
+  </div>
+</div> 
+<br/>
+<a href="https://quintor.nl/">https://quintor.nl/</a>
+
+--
+
+<img src="images/logo.png" style="max-height: none; border:0; background: transparent; box-shadow: none" height="100px">
+
+- Minor Cloud-Native Software Development 
+  - <https://quintor.nl/minors/>
+- Afstuderen bij Quintor 
+  - <https://quintor.nl/student/>
+- Young Professional Programma 
+  - <https://quintor.nl/young-professional/>
+
 ---
 
 ## Programma vandaag
@@ -49,6 +89,7 @@
 - AWS Lambda
 - Serverless Application Model
 - API Gateway
+- DynamoDB
 
 ---
 
@@ -424,6 +465,43 @@ Note:
 ## API Gateway
 ### SAM Example
 
+
+```yaml
+...
+Resources:
+  microservicehttpendpointpython3:
+    Type: 'AWS::Serverless::Function'
+    Properties:
+      ...
+      Events:
+        Api1:
+          Type: Api
+          Properties:
+            Path: /MyResource
+            Method: GET
+```
+
+---
+
+## DynamoDB
+
+> DynamoDB is een fully managed (Serverless) widecolumn non-relational database
+
+- Geoptimaliseerd voor schaal en performance
+- Flexibel schema
+- JSON en key-value data structuren
+- Availability, durability, en scalability built-in
+
+--
+
+## DynamoDB
+
+- Maak tabellen zonder na te denken over hardware of zelfs DBMS
+  - DynamoDB tabellen kunnen elke hoeveelheid data en verkeer verwerken
+  - Voorzie tabellen van resources aan de hand van
+    - Read Capacity Units (RCU)
+    - Write Capacity Units (WCU)
+
 ---
 
 <!-- .slide: data-background="white" -->
@@ -434,10 +512,8 @@ Note:
 
 ### Vragen?
 
-> Einde
-
 ---
 
 ## Hand-on Opdracht
 
-> 
+> Link naar Github repo

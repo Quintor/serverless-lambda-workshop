@@ -2,6 +2,8 @@ import json
 import boto3
 import os
 
+from boto3.dynamodb.conditions import Attr
+
 dynamodb = boto3.resource('dynamodb', endpoint_url=os.environ['AWS_DYNAMODB_ENDPOINT']) 
 
 def lambda_handler(event, context):
@@ -11,19 +13,19 @@ def lambda_handler(event, context):
     if event['queryStringParameters']:
         topicfilter = event['queryStringParameters'].get('topic')
 
+        
     if topicfilter:
         print("Returning the messages for topic {}".format(topicfilter))
+        data = table.scan(
+            FilterExpression=Attr("topic").eq(topicfilter)
+        )
     else:
         print("No topic filter specified. Returning all messages")
-
-    data = table.scan()
+        data = table.scan()
     items = data['Items']
 
     print('Scanned messages: ' + str(data['Count']))
 
-    # if topicFilter:
-    #     print('Received topicFilter: ' + topicFilter)
-    #     items = { key:value for (key,value) in items if key == 'topic' value == topicFilter}
 
     return {
         "statusCode": 200,

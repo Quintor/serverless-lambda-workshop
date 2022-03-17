@@ -517,4 +517,4 @@ Resources:
 
 ## Hand-on Opdracht
 
-> Link naar Github repo
+> [https://github.com/Quintor/serverless-lambda-workshop/blob/main/assignment/serverless.md](https://github.com/Quintor/serverless-lambda-workshop/blob/main/assignment/serverless.md)

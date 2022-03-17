@@ -1,4 +1,3 @@
-import json
 import boto3
 import os
 
@@ -21,9 +20,10 @@ def lambda_handler(event, context):
 
     print('Scanned messages: ' + str(data['Count']))
 
-    # if topicFilter:
-    #     print('Received topicFilter: ' + topicFilter)
-    #     items = { key:value for (key,value) in items if key == 'topic' value == topicFilter}
+    if topicfilter:
+        items = list(filter(lambda d: d['topic'] == topicfilter, items))
+
+    print('Returned messages: ' + str(len(items)))
 
     return {
         "statusCode": 200,

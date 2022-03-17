@@ -10,7 +10,7 @@
 - Install AWS CLI: <https://aws.amazon.com/cli/>
 - Install AWS SAM CLI: <https://docs.aws.amazon.com/serverless-application-model/latest/developerguide/serverless-sam-cli-install.html>
 - Install Docker: <https://docs.docker.com/engine/install/>
-- Tutorial: Deploying a Hello World application: <https://docs.aws.amazon.com/serverless-application-model/latest/developerguide/serverless-getting-started-hello-world.html>
+- Tutorial: Deploying a Hello World application: <https://docs.aws.amazon.com/serverless-application-model/latest/developerguide/serverless-getting-started-hello-world.html> (ter referentie, je hebt niet de hele tutorial nodig)
 
 ## Opdrachtomschrijving
 

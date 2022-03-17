@@ -7,8 +7,14 @@ dynamodb = boto3.resource('dynamodb', endpoint_url=os.environ['AWS_DYNAMODB_ENDP
 def lambda_handler(event, context):
     table = dynamodb.Table('ForumTable')
 
-    # topicFilter = event['queryStringParameters']['topic']
+    topicfilter = None
+    if event['queryStringParameters']:
+        topicfilter = event['queryStringParameters'].get('topic')
 
+    if topicfilter:
+        print("Returning the messages for topic {}".format(topicfilter))
+    else:
+        print("No topic filter specified. Returning all messages")
 
     data = table.scan()
     items = data['Items']

@@ -1,4 +1,4 @@
-# StaQ Presentaties
+# Presentaties
 In deze repository vind je een template voor je StaQ presentatie en/of hands-on sessie
 gemaakt binnen reveal.js
 
@@ -8,8 +8,6 @@ Het template kent een donkere en lichte variant. Aan jou de keuze welke je wilt 
 Voor de mensen die eerder met nodejs/npm en git gewerkt hebben, volg de volgende stappen
 om met je presentatie aan de slag te gaan:
 
-- Clone deze repository
-- Zorg dat je in je eigen branch aan de slag gaat
 - In je working copy voer je eenmalig `npm install` uit
 - Voer `npm start` uit om je lokale webserver te starten
 - Je presentatie kun je bewerken door presentatie.md aan te passen, of, als je wilt, de index.html zelf

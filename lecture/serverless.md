@@ -10,39 +10,6 @@
 
 ## Even voorstellen
 
-<h4>Arjen Wassink</h4>
-<div class="columns two">
-  <div class="left">
-    <ul>
-      <li>Quintor</li>
-      <li>Cloud Specialist</li>
-      <li>IT Architect</li>
-      <li>BAR HU</li>
-    </ul>
-    <br>
-    <ul>
-      <li>Email: awassink@quintor.nl</li>
-      <li>Twitter: @ArjenWassink</li>
-      <li>LinkedIn: <a href="https://www.linkedin.com/in/arjen-wassink-39204423/">arjen-wassink-39204423</a></li>
-    </ul>
-
-  </div>
-  <div class="right">
-    <img src="images/arjen-wassink.jpg" style="max-height: none" height="200px">
-     <ul>
-      <li><u>Specialisaties:</u></li>
-      <li>IT Architectuur</li>
-      <li>Container technologie</li>
-      <li>Cloud technologie</li>
-      <li>Java Developer (20 jaar)</li>
-    </ul>
-  </div>
-</div>
-
---
-
-## Even voorstellen
-
 <h4>Pim Otte</h4>
 <div class="columns two">
   <div class="left">

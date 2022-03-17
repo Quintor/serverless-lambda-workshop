@@ -1,4 +1,4 @@
-# Serverless Application Development
+# AWS Serverless Application Development workshop
 
 ## Onderwerpen
 

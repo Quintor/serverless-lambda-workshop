@@ -352,4 +352,33 @@ Bouw en start de nieuwe versie van de functie en test het opslaan van geposte me
 
 ### Voeg een Lambda toe voor het ophalen van alle messages
 
-#### Pas de Lambda aan zodat alleen de messages van een gegeven topic opgehaald worden
+Maak de `get_all_messages` folder aan in het project en voeg de `GetMessagesFunction` toe aan de `template.yaml` zoals dat bij de vorige lambda is gedaan.
+Deze lambda zal verbonden moeten worden aan de `GET` method op URL pad `/messages`.
+
+Het gebruikt de `table.scan()` method om alle records uit de `ForumTable` op te halen.
+Deze records worden in de body van de response teruggegeven.
+
+```python
+    table = dynamodb.Table('ForumTable')
+
+    data = table.scan()
+    items = data['Items']
+
+    print('Scanned messages: ' + str(data['Count']))
+
+    return {
+        "statusCode": 200,
+        "body": items
+    }
+```
+
+Bouw en start de nieuwe versie van de functie en test dat alle records in de tabel verkregen worden.
+
+```bash
+% curl http://127.0.0.1:3000/messages                                                                                                                                                                                                                         
+[{'message': 'hello world', 'topic': 'greetings', 'id': '687aea2c-2eb1-4c4d-b5ec-dc5098105d45'}, {'message': 'hello world', 'topic': 'greeting', 'id': '0d698416-79a7-4353-b9d7-30b4551e4923'}]
+```
+
+### Pas de Lambda aan zodat alleen de messages van een gegeven topic opgehaald worden
+
+<TODO>

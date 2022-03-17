@@ -19,6 +19,7 @@
     <br>
     <ul>
       <li>Email: p.otte@quintor.nl</li>
+      <li>LinkedIn: <a href="https://www.linkedin.com/in/pim-otte-95b4ba124/">pim-otte-95b4ba124</a></li>
     </ul>
 
   </div>
@@ -26,9 +27,9 @@
     <img src="images/pim-otte.jpeg" style="max-height: none" height="200px">
      <ul>
       <li><u>Specialisaties:</u></li>
-      <li>Blockchain Development</li>
       <li>Fullstack Java Development</li>
       <li>Cloud Native Software Development</li>
+      <li>Blockchain Development</li>
     </ul>
   </div>
 </div>
@@ -136,11 +137,11 @@ Quicker turnaround - Serverless architecture can significantly cut time to marke
 ## Serverless Architecture
 ### Disadvantages
 
-- Vendor lock-in is a risk
-- Testing and debugging become more challenging
-- Serverless computing introduces new security concerns
-- Serverless architectures are often not built for long-running processes
-- Performance may be affected
+- Vendor lock-in is a risk <!-- .element: class="fragment" -->
+- Testing and debugging become more challenging <!-- .element: class="fragment" -->
+- Serverless computing introduces new security concerns <!-- .element: class="fragment" -->
+- Serverless architectures are often not built for long-running processes <!-- .element: class="fragment" -->
+- Performance may be affected <!-- .element: class="fragment" -->
 
 Note: 
 
@@ -200,22 +201,22 @@ Note:
 ## Function-as-a-Service
 ### Advantages
 
-- Serverless -> More focus on application development
-- Stateless functions are inherently scalable
-- Scale down to 0 -> Don't pay for idle resources
-- Built in availability and fault tolerance
-- Business logic in minimal shippable unit sizes
+- Serverless -> More focus on application development <!-- .element: class="fragment" -->
+- Stateless functions are inherently scalable <!-- .element: class="fragment" -->
+- Scale down to 0 -> Don't pay for idle resources <!-- .element: class="fragment" -->
+- Built in availability and fault tolerance <!-- .element: class="fragment" -->
+- Business logic in minimal shippable unit sizes <!-- .element: class="fragment" -->
 
 --
 
 ## Function-as-a-Service
 ### Disadvantages
 
-- Decreased transparency
-- Potentially tough to debug
-- Potentially tough to manage costs
-- Decreased oversight of your system
-- Increased chances of failures 
+- Decreased transparency <!-- .element: class="fragment" -->
+- Potentially tough to debug <!-- .element: class="fragment" -->
+- Potentially tough to manage costs <!-- .element: class="fragment" -->
+- Decreased oversight of your system <!-- .element: class="fragment" -->
+- Increased chances of failures <!-- .element: class="fragment" -->
 
 Note:
 Decreased transparency. Someone else is managing your infrastructure so it can be tough to understand the entire system.
@@ -236,13 +237,13 @@ Solutions for caching resources between stateless requests (i.e. DB connections)
 
 ## AWS Lambda
 
-- Runs your code in response to events
-- Manages the underlying compute resources
-- Create your own back-end services
-- Used to extend other AWS services with custom logic
-- Runs your code on high-availability compute infrastructure
-- Automatic scaling
-- Only pay for what you use
+- Runs your code in response to events <!-- .element: class="fragment" -->
+- Manages the underlying compute resources <!-- .element: class="fragment" -->
+- Create your own back-end services <!-- .element: class="fragment" -->
+- Used to extend other AWS services with custom logic <!-- .element: class="fragment" -->
+- Runs your code on high-availability compute infrastructure <!-- .element: class="fragment" -->
+- Automatic scaling <!-- .element: class="fragment" -->
+- Only pay for what you use <!-- .element: class="fragment" -->
 
 Note:
 
@@ -339,20 +340,20 @@ Note:
 
 ## Serverless Application Model
 
-> The AWS::Serverless transform, which is a macro hosted by AWS CloudFormation, takes an entire template written in the AWS Serverless Application Model (AWS SAM) syntax and transforms and expands it into a compliant AWS CloudFormation template
-
-Note:
-
-<https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/transform-aws-serverless.html>
+- Open-source framework
+- Build serverless applications on AWS <!-- .element: class="fragment" -->
+- AWS SAM template specification <!-- .element: class="fragment" -->
+- AWS SAM command line interface (AWS SAM CLI) <!-- .element: class="fragment" -->
 
 --
 
 ## Serverless Application Model
 
-- Open-source framework
-- Build serverless applications on AWS <!-- .element: class="fragment" -->
-- AWS SAM template specification <!-- .element: class="fragment" -->
-- AWS SAM command line interface (AWS SAM CLI) <!-- .element: class="fragment" -->
+> The AWS::Serverless transform, which is a macro hosted by AWS CloudFormation, takes an entire template written in the AWS Serverless Application Model (AWS SAM) syntax and transforms and expands it into a compliant AWS CloudFormation template
+
+Note:
+
+<https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/transform-aws-serverless.html>
 
 --
 
@@ -369,11 +370,11 @@ Note:
 ## Serverless Application Model
 ### Template
 
-- Closely follows the format of an AWS CloudFormation template file
-- Transform declaration - `Transform: AWS::Serverless-2016-10-31` 
-- Globals section - Defines properties that are common to all the resources 
-- Resources section - Also AWS SAM resources 
-- Parameters section - Causes `sam deploy --guided` to present additional prompts 
+- <!-- .element: class="fragment" --> Closely follows the format of an AWS CloudFormation template file
+- <!-- .element: class="fragment" --> Transform declaration - `Transform: AWS::Serverless-2016-10-31` 
+- <!-- .element: class="fragment" --> Globals section - Defines properties that are common to all the resources 
+- <!-- .element: class="fragment" --> Resources section - Also AWS SAM resources 
+- <!-- .element: class="fragment" --> Parameters section - Causes `sam deploy --guided` to present additional prompts 
 
 --
 
@@ -516,4 +517,4 @@ Resources:
 
 ## Hand-on Opdracht
 
-> Link naar Github repo
+> [https://github.com/Quintor/serverless-lambda-workshop/blob/main/assignment/serverless.md](https://github.com/Quintor/serverless-lambda-workshop/blob/main/assignment/serverless.md)

@@ -15,7 +15,7 @@ De presentatie in met RevealJS (<https://revealjs.com/>) kan bekeken/gepresentee
 Daarvoor dient eerste de benodigde npm modules geïnstalleerd te worden via `npm install`.
 Daarna kan de presentatie gestart worden via `npm start` en opent de presentatie in de browser.
 
-Mochten er problemen zijn dan kan ook de inhoud bekeken worden in de markdown file [lecture/serverless.md](lecture/serverless.md).
+Mochten er problemen zijn dan kan ook de inhoud bekeken worden als pdf [./presentatie.pdf](./presentatie.pdf) of als markdown file [lecture/serverless.md](lecture/serverless.md).
 
 ## De workshop
 

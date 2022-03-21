@@ -159,37 +159,10 @@ Note:
 --
 
 ## Serverless Architecture
-### Costs
-
-# ![](images/Lambda_EC2_cost.png) <!-- .element: width="800" -->
-
-Note:
-
-<https://cloudserviceevaluation.com/2017/02/02/lambda-or-ec2-which-one-do-you-use-to-save-the-most-money/>
-
---
-
-## Serverless Architecture
 
 # ![](images/GCP-ComputeOptions.jpg) <!-- .element: width="800" -->
 
---
-
-## Serverless Architecture
-
-# ![](images/serverless-scooby.jpg) <!-- .element: width="400" -->
-
 ---
-
-## Function-as-a-Service
-
-- Run modular chunks of functionality -> Single purpose
-- Executed and scaled independently <!-- .element: class="fragment" -->
-- Not bothered by complex infrastructure -> Serverless <!-- .element: class="fragment" -->
-
-> Serverless != FaaS, but are best friends! <!-- .element: class="fragment" -->
-
---
 
 ## Function-as-a-Service
 ### Application Granularity
@@ -323,18 +296,9 @@ Note:
 
 Note:
 
-- Nieuwe instantie -> code inladen en code buiten handler uitvoeren (init) <!-- .element: class="fragment" -->
-- Init kan even duren als veel wordt geïnitialiseerd (code, dependencies, SDK). <!-- .element: class="fragment" -->
-- Eerste request van nieuwe instantie heeft hogere latency <!-- .element: class="fragment" -->
-
---
-
-<!-- .slide: data-background="white" -->
-
-## AWS Lambda
-### Cold Start
-
-# ![](images/AWS-lambda-Cold-Starts.jpg) <!-- .element: height="480" -->
+- Nieuwe instantie -> code inladen en code buiten handler uitvoeren (init) 
+- Init kan even duren als veel wordt geïnitialiseerd (code, dependencies, SDK). 
+- Eerste request van nieuwe instantie heeft hogere latency 
 
 ---
 
@@ -344,48 +308,6 @@ Note:
 - Build serverless applications on AWS <!-- .element: class="fragment" -->
 - AWS SAM template specification <!-- .element: class="fragment" -->
 - AWS SAM command line interface (AWS SAM CLI) <!-- .element: class="fragment" -->
-
---
-
-## Serverless Application Model
-
-> The AWS::Serverless transform, which is a macro hosted by AWS CloudFormation, takes an entire template written in the AWS Serverless Application Model (AWS SAM) syntax and transforms and expands it into a compliant AWS CloudFormation template
-
-Note:
-
-<https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/transform-aws-serverless.html>
-
---
-
-## Serverless Application Model
-### Benefits
-
-- Single-deployment configuration
-- Extension of AWS CloudFormation <!-- .element: class="fragment" -->
-- Built-in best practices <!-- .element: class="fragment" -->
-- Local debugging and testing <!-- .element: class="fragment" -->
-
---
-
-## Serverless Application Model
-### Template
-
-- <!-- .element: class="fragment" --> Closely follows the format of an AWS CloudFormation template file
-- <!-- .element: class="fragment" --> Transform declaration - `Transform: AWS::Serverless-2016-10-31` 
-- <!-- .element: class="fragment" --> Globals section - Defines properties that are common to all the resources 
-- <!-- .element: class="fragment" --> Resources section - Also AWS SAM resources 
-- <!-- .element: class="fragment" --> Parameters section - Causes `sam deploy --guided` to present additional prompts 
-
---
-
-## Serverless Application Model
-### SAM resources
-
-- AWS::Serverless::Function
-- AWS::Serverless::Api <!-- .element: class="fragment" -->
-- AWS::Serverless::HttpApi <!-- .element: class="fragment" -->
-- AWS::Serverless::StateMachine <!-- .element: class="fragment" -->
-- AWS::Serverless::SimpleTable <!-- .element: class="fragment" -->
 
 --
 
@@ -438,11 +360,11 @@ Resources:
 ## Serverless Application Model
 ### CLI
 
-- sam build - Builds a serverless application
-- sam deploy - Deploy a serverless application
 - sam init - Initializes a serverless project
+- sam build - Builds a serverless application
 - sam local invoke - Invokes a local Lambda function once
 - sam local start-api - Runs your serverless application locally
+- sam deploy - Deploy a serverless application
 - sam logs - Fetches logs that are generated
 - sam validate - Verifies whether an SAM template file is valid
 
